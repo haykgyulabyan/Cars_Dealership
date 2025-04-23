@@ -16,6 +16,18 @@ class CarController {
     const car = await CarService.createCar({ ...req.body });
     res.status(201).json(car);
   }
+
+  async addFeature(req, res) {
+    const { carId, featureId } = req.params;
+    const result = await CarService.addFeatureToCar(carId, featureId);
+    res.json(result);
+  }
+
+  async removeFeature(req, res) {
+    const { carId, featureId } = req.params;
+    const result = await CarService.removeFeatureFromCar(carId, featureId);
+    res.json(result);
+  }
 }
 
 export default new CarController();
