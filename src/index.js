@@ -5,6 +5,8 @@ import usersRouter from './routers/user.router.js';
 import carRouter from './routers/car.router.js';
 import sequelize from './config/db.js';
 import modelRouter from './routers/model.router.js';
+import dealershipRouter from './routers/dealership.router.js';
+import ratingRouter from './routers/rating.router.js';
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use(express.json());
 app.use('/api/users', usersRouter);
 app.use('/api/cars', carRouter);
 app.use('/api/models', modelRouter);
+app.use('/api/dealerships', dealershipRouter);
+app.use('/api/rating', ratingRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
