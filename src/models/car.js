@@ -31,6 +31,16 @@ const Car = sequelize.define('car', {
       key: 'id',
     },
   },
+  dealership_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'dealerships',
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 }, { timestamps: false });
 
 export default Car;
