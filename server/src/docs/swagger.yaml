@@ -1,0 +1,299 @@
+openapi: 3.0.3
+info:
+  title: To Do API Specification
+  description: API documentation for the To Do bounded context.
+servers:
+  - url: /api/v1
+    description: Development Server
+tags:
+  - name: ToDo
+    description: Operations related to the ToDo bounded context.
+paths:
+  /add-item:
+    post:
+      summary: Add Item
+      description: Executes the "Add Item" command. ...
+      operationId: addItem
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: 'OK: The resource was updated successfully.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddItemRequest'
+  /update-item-description:
+    post:
+      summary: Update Item Description
+      description: Executes the "Update Item Description" command. ...
+      operationId: updateItemDescription
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: 'OK: The resource was updated successfully.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateItemDescriptionRequest'
+  /mark-item-done:
+    post:
+      summary: Mark Item Done
+      description: Executes the "Mark Item Done" command. ...
+      operationId: markItemDone
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: 'OK: The resource was updated successfully.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkItemDoneRequest'
+  /delete-item:
+    post:
+      summary: Delete Item
+      description: Executes the "Delete Item" command. ...
+      operationId: deleteItem
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: 'OK: The resource was updated successfully.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteItemRequest'
+  /get-all-items:
+    get:
+      summary: Get All Items
+      description: Retrieves data based on the "Get All Items" query. This is a synchronous query operation.
+      operationId: getAllItems
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAllItemsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /get-item-by-id/{id}:
+    get:
+      summary: Get Item by ID
+      description: Retrieves data based on the "Get Item by ID" query. This is a synchronous query operation.
+      operationId: getItemByID
+      tags:
+        - ToDo
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The unique identifier for the Item.
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: An error occurred.
+    Item:
+      type: object
+      description: Represents a Item in the system.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the Item (primary key).
+          example: item-001
+        description:
+          type: string
+          description: The description of the Item.
+          example: Buy groceries
+        isDone:
+          type: string
+          description: The isDone of the Item.
+          example: 'false'
+        dueDate:
+          type: string
+          description: The dueDate of the Item.
+          example: '2023-11-15'
+        priority:
+          type: string
+          description: The priority of the Item.
+          example: High
+      required:
+        - id
+        - description
+        - isDone
+        - dueDate
+        - priority
+    AddItemRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: item-001
+        description:
+          type: string
+          example: Buy groceries
+      required:
+        - id
+        - description
+    UpdateItemDescriptionRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: item-001
+        description:
+          type: string
+          example: Buy groceries
+        isDone:
+          type: string
+          example: 'false'
+        dueDate:
+          type: string
+          example: '2023-11-15'
+      required:
+        - id
+        - description
+        - isDone
+        - dueDate
+    MarkItemDoneRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: item-001
+        description:
+          type: string
+          example: Buy groceries
+        isDone:
+          type: string
+          example: 'false'
+        dueDate:
+          type: string
+          example: '2023-11-15'
+        priority:
+          type: string
+          example: High
+      required:
+        - id
+        - description
+        - isDone
+        - dueDate
+        - priority
+    DeleteItemRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: item-001
+      required:
+        - id
+    GetAllItemsResponse:
+      type: object
+      description: Response schema for the Get All Items query.
+      properties:
+        id:
+          type: string
+          description: The id of the Item.
+          example: item-001
+        description:
+          type: string
+          description: The description of the Item.
+          example: Buy groceries
+        isDone:
+          type: string
+          description: The isDone of the Item.
+          example: 'false'
+        dueDate:
+          type: string
+          description: The dueDate of the Item.
+          example: '2023-11-15'
+  parameters:
+    ItemId:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier for the Item.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: 'Bad Request: The server cannot or will not process the request due to something that is perceived to be a client error.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 'Not Found: The server can not find the requested resource.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 'Internal Server Error: The server has encountered a situation it doesn''t know how to handle.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
